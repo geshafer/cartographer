@@ -1,1 +1,20 @@
-NEW MAP
+<div class="hidden">
+  GENERAL PURPOSE DATA
+</div>
+
+<script type="text/javascript">
+
+var canvas = document.getElementById('map');
+
+Tapestry.sizeTo(window, canvas);
+Cartographer.draw([{q:0,r:0}], canvas);
+
+var mc = new Hammer.Manager(canvas);
+
+mc.add(new Hammer.Tap());
+mc.on("tap", Cartographer.plotSurroundings(canvas));
+
+mc.add(new Hammer.Pan());
+mc.on("pan", Cartographer.pan(canvas));
+
+</script>
