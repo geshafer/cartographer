@@ -1,0 +1,7 @@
+SHOW MAP <%= @map.id %>
+
+<ul>
+  <% @map.tiles.each do |tile| %>
+    <li><%= "X: #{tile.x}, Y: #{tile.y}" %></li>
+  <% end %>
+</ul>
