@@ -47,7 +47,7 @@ var Map = (function() {
       q = Math.round(orientation.b0 * center.x + orientation.b1 * center.y),
       r = Math.round(orientation.b2 * center.x + orientation.b3 * center.y);
 
-    return { q: q, r: r, s: -q-r };
+    return { q: q, r: r };
   }
 
   return {

@@ -5,9 +5,11 @@
 <script type="text/javascript">
 
 var canvas = document.getElementById('map');
+var data = [{ q: 0, r: 0 }];
 
 Tapestry.sizeTo(window, canvas);
-Cartographer.draw([{q:0,r:0}], canvas);
+Cartographer.setMap(data);
+Cartographer.draw(data, canvas);
 
 var mc = new Hammer.Manager(canvas);
 

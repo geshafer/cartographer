@@ -1,7 +1,22 @@
-SHOW MAP <%= @map.id %>
+<div class="hidden">
+  GENERAL PURPOSE DATA
+</div>
 
-<ul>
-  <% @map.tiles.each do |tile| %>
-    <li><%= "X: #{tile.x}, Y: #{tile.y}" %></li>
-  <% end %>
-</ul>
+<script type="text/javascript">
+
+var canvas = document.getElementById('map');
+var map = JSON.parse('<%= @map.to_json.html_safe %>');
+
+Tapestry.sizeTo(window, canvas);
+Cartographer.setMap(map);
+Cartographer.draw(map, canvas);
+
+var mc = new Hammer.Manager(canvas);
+
+mc.add(new Hammer.Tap());
+mc.on("tap", Cartographer.plotSurroundings(canvas));
+
+mc.add(new Hammer.Pan());
+mc.on("pan", Cartographer.pan(canvas));
+
+</script>

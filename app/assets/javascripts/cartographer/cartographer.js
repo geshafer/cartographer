@@ -1,5 +1,9 @@
 var Cartographer = (function() {
-  var map = [{ q: 0, r: 0, s: 0 }];
+  var map = [{ q: 0, r: 0 }];
+
+  function setMap(newMap) {
+    map = newMap;
+  }
 
   function plotSurroundings(canvas) {
     return function(event) {
@@ -35,6 +39,7 @@ var Cartographer = (function() {
   }
 
   return {
+    setMap: setMap,
     pan: pan,
     plotSurroundings: plotSurroundings,
     draw: draw
