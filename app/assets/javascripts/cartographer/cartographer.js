@@ -8,10 +8,10 @@ var Cartographer = (function() {
   function plotSurroundings(canvas) {
     return function(event) {
       var point = Tapestry.pixelToPoint(event.center),
-        target = Map.pointToHex(point);
+        target = Map.pointToTile(point);
 
       if (Map.has(map, target)) {
-        map = Map.add(map, Hex.neighbors(target));
+        map = Map.add(map, Tile.neighbors(target));
         draw(map, canvas);
       }
     };
@@ -31,10 +31,10 @@ var Cartographer = (function() {
     };
   }
 
-  function draw(hexes, canvas) {
+  function draw(tiles, canvas) {
     Tapestry.clear(canvas);
-    hexes.forEach(function(hex, index) {
-      Tapestry.draw(Hex.cornerPoints(Map.hexToPoint(hex)), canvas);
+    tiles.forEach(function(tile, index) {
+      Tapestry.draw(Tile.cornerPoints(Map.tileToPoint(tile)), canvas);
     });
   }
 

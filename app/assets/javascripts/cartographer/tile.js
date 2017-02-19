@@ -1,5 +1,5 @@
-var Hex = (function() {
-  var orientation = ORIENTATION.POINTY,
+var Tile = (function() {
+  var orientation = ORIENTATION.POINTY_HEX,
     size = 36;
 
   function equal(one, two) {
@@ -13,22 +13,26 @@ var Hex = (function() {
     };
   }
 
-  function neighbors(hex) {
+  function neighbors(tile) {
     return [
-      Hex.add(hex, { q:  0, r:  1 }),
-      Hex.add(hex, { q: -1, r:  1 }),
-      Hex.add(hex, { q: -1, r:  0 }),
-      Hex.add(hex, { q:  0, r: -1 }),
-      Hex.add(hex, { q:  1, r: -1 }),
-      Hex.add(hex, { q:  1, r:  0 }),
-    ];
+      Tile.add(tile, { q:  0, r:  1 }),
+      Tile.add(tile, { q: -1, r:  0 }),
+      Tile.add(tile, { q:  0, r: -1 }),
+      Tile.add(tile, { q:  1, r:  0 }),
+
+      // these are hex specific neighbors
+      // we should improve this later so
+      // it uses orientation for this
+      Tile.add(tile, { q: -1, r:  1 }),
+      Tile.add(tile, { q:  1, r: -1 }),
+    ].slice(0, orientation.numberOfCorners);
   }
 
   function cornerPoints(center) {
     var corners = [],
       offset;
 
-    for (var i = 0; i < 6; i++) {
+    for (var i = 0; i < orientation.numberOfCorners; i++) {
       offset = cornerPointOffset(center, i);
       corners.push({
         x: center.x + offset.x,
@@ -40,7 +44,7 @@ var Hex = (function() {
   }
 
   function cornerPointOffset(center, corner) {
-    var angle = 2.0 * Math.PI * (orientation.startAngle + corner) / 6;
+    var angle = 2.0 * Math.PI * (orientation.startAngle + corner) / orientation.numberOfCorners;
 
     return {
       x: size * Math.cos(angle),

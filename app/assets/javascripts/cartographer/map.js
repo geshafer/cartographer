@@ -1,9 +1,9 @@
 var Map = (function() {
-  function has(map, hex) {
+  function has(map, tile) {
     var present = false;
 
     for (var i = 0; i < map.length; i++) {
-      if (Hex.equal(map[i], hex)) {
+      if (Tile.equal(map[i], tile)) {
         present = true;
         break;
       }
@@ -12,11 +12,11 @@ var Map = (function() {
     return present;
   }
 
-  function add(map, hexes) {
-    var unique = hexes.slice();
+  function add(map, tiles) {
+    var unique = tiles.slice();
 
-    for(var i = hexes.length - 1; i >= 0; i--) {
-      if (has(map, hexes[i])) {
+    for(var i = tiles.length - 1; i >= 0; i--) {
+      if (has(map, tiles[i])) {
         unique.splice(i, 1);
       }
     }
@@ -26,12 +26,12 @@ var Map = (function() {
     return map;
   }
 
-  function hexToPoint(hex) {
-    var orientation = ORIENTATION.POINTY,
+  function tileToPoint(tile) {
+    var orientation = ORIENTATION.POINTY_HEX,
       origin = { x: 0, y: 0 },
       size = 36,
-      x = (orientation.f0 * hex.q + orientation.f1 * hex.r) * size,
-      y = (orientation.f2 * hex.q + orientation.f3 * hex.r) * size;
+      x = (orientation.f0 * tile.q + orientation.f1 * tile.r) * size,
+      y = (orientation.f2 * tile.q + orientation.f3 * tile.r) * size;
 
     return {
       x: x + origin.x,
@@ -39,8 +39,8 @@ var Map = (function() {
     };
   }
 
-  function pointToHex(point) {
-    var orientation = ORIENTATION.POINTY,
+  function pointToTile(point) {
+    var orientation = ORIENTATION.POINTY_HEX,
       origin = { x: 0, y: 0 },
       size = 36,
       center = { x: (point.x - origin.x) / size, y: (point.y - origin.y) / size },
@@ -54,7 +54,7 @@ var Map = (function() {
     has: has,
     add: add,
 
-    hexToPoint: hexToPoint,
-    pointToHex: pointToHex
+    tileToPoint: tileToPoint,
+    pointToTile: pointToTile
   };
 })();
