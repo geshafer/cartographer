@@ -5,7 +5,7 @@
 <script type="text/javascript">
 
 var canvas = document.getElementById('map');
-var map = JSON.parse('<%= @map.to_json.html_safe %>');
+var map = JSON.parse('<%= @map.tiles.to_json.html_safe %>');
 
 Tapestry.sizeTo(window, canvas);
 Cartographer.setMap(map);
@@ -14,7 +14,7 @@ Cartographer.draw(map, canvas);
 var mc = new Hammer.Manager(canvas);
 
 mc.add(new Hammer.Tap());
-mc.on("tap", Cartographer.plotSurroundings(canvas));
+mc.on("tap", Cartographer.plotSurroundings(canvas, '<%= map_url(@map) %>'));
 
 mc.add(new Hammer.Pan());
 mc.on("pan", Cartographer.pan(canvas));

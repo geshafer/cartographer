@@ -5,13 +5,16 @@ var Cartographer = (function() {
     map = newMap;
   }
 
-  function plotSurroundings(canvas) {
+  function plotSurroundings(canvas, url) {
     return function(event) {
       var point = Tapestry.pixelToPoint(event.center),
-        target = Map.pointToTile(point);
+        target = Map.pointToTile(point),
+        neighbors = [];
 
       if (Map.has(map, target)) {
-        map = Map.add(map, Tile.neighbors(target));
+        neighbors = Tile.neighbors(target);
+        map = Map.add(map, neighbors);
+        ajax(url, { map: { tiles: map }});
         draw(map, canvas);
       }
     };
@@ -36,6 +39,14 @@ var Cartographer = (function() {
     tiles.forEach(function(tile, index) {
       Tapestry.draw(Tile.cornerPoints(Map.tileToPoint(tile)), canvas);
     });
+  }
+
+  function ajax(url, data) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("PUT", url, true);
+    xhr.setRequestHeader('X-CSRF-Token', document.querySelector('meta[name="csrf-token"]').getAttribute("content"));
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.send(JSON.stringify(data));
   }
 
   return {

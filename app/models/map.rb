@@ -1,7 +1,7 @@
 class Map < ApplicationRecord
-  has_many :tiles
+  serialize :tiles, JSON
 
-  def to_json
-    tiles.collect { |tile| { q: tile.x, r: tile.y } }.to_json
+  def tiles
+    super || []
   end
 end

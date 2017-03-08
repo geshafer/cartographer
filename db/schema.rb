@@ -10,20 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170218153451) do
+ActiveRecord::Schema.define(version: 20170303005836) do
 
   create_table "maps", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "tiles", force: :cascade do |t|
-    t.integer  "map_id"
-    t.integer  "x"
-    t.integer  "y"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["map_id"], name: "index_tiles_on_map_id"
+    t.text     "tiles"
   end
 
 end
